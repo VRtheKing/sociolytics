@@ -6,7 +6,6 @@ import stats from './images/Pressure.svg'
 import subscription from './images/Chat_plus.svg'
 import settings from './images/Setting_line.svg'
 import signout from './images/Sign_out_squre.svg'
-import './styles/sidebar.css'
 
 function Sidebar(){
     return (

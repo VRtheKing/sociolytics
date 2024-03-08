@@ -2,7 +2,6 @@ import React from "react";
 import { ReactDOM } from "react";
 import wave from './images/wave.svg'
 import illustration from './images/illustartion.svg'
-import './styles/homepage.css'
 
 function HomePage(){
 
