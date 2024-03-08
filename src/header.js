@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactDOM } from "react-dom";
 import './styles/header.css'
-import logo from './images/logo.svg'
+import logo from './images/logon.svg'
 
 function Header(){
     return(
