@@ -11,7 +11,7 @@
     height: 80px;
 }
 
-.logo{
+.logo1{
     display: flex;
     width: 48px;
     height: 48px;
@@ -19,7 +19,7 @@
     margin-left: 3%;
 }
 
-.nav {
+.nav1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
