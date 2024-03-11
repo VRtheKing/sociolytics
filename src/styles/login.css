@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .form {
+    padding: 1.5rem 3rem;
+    background: #dbdbdb;
+    border-radius: 5%;
+  }
+  
+  .login-top {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .welcome {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  
+  .message {
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 2rem;
+  }
+  
+  .justify {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .username{
+    background: #474747;
+  }
+  

@@ -1,15 +1,23 @@
 import React from "react"
 
-function progress(percentage, master_parent, title="No Title", colour="#000000") {
-    const bar_height = 10
+function progress(percentage=75, master_parent=null, title="No Title", colour="#000000", border=false, borderSize=1, borderColour='black') {
+    if (!master_parent) {
+        throw new Error('A master parent must be provided for this to work')
+    }
+
+    const barHeight = 15
     const spacing = 20
     const zIndex = 4
+
+    if (borderSize > barHeight / 2) {
+        border = false
+        throw new Error(`Max border size is half of the bar height: ${barHeight / 2}`)
+    }
 
     if (percentage > 100 || percentage < 0) {
         throw new Error(`Percentage must be no greater than 100 and no smaller than 0: Percentage was ${percentage}`)
     }
 
-    // Create a new progress bar that attaches to the master_parent
     let progressBar = document.createElement('div');
     progressBar.className = 'circular';
     progressBar.id = 'progressBar';
@@ -17,6 +25,14 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
     // Create the elements of the progress bar
     let inner = document.createElement('div');
     inner.className = 'inner';
+
+    // Create inner border if border is enabled
+    let innerBorder = null
+
+    if (border) {
+        innerBorder = document.createElement('div');
+        innerBorder.className = 'inner border';    
+    }
 
     let outer = document.createElement('div');
     outer.className = 'outer';
@@ -56,6 +72,12 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
 
     // Append the created elements to the progressBar element
     progressBar.appendChild(inner);
+
+    // Append the innerBorder to the parent if there is a border
+    if (border) {
+        progressBar.appendChild(innerBorder);
+    }
+
     progressBar.appendChild(outer);
     progressBar.appendChild(numb);
     progressBar.appendChild(circle);
@@ -72,8 +94,13 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
     let progress = progressBar.getElementsByClassName('progress');
 
     // Define variables needed for heights and positions
-    const masterhHeight = master_parent.style.height.match(/([\d.]+)(\D+)/)
-    const unit = masterhHeight[2]
+    let masterhHeight = master_parent.style.height.match(/([\d.]+)(\D+)/)
+    let unit = 'px'
+    if (masterhHeight) {
+        unit = masterhHeight[2]
+    } else {
+        masterhHeight = [0, 100, unit]
+    }
     let move_position = (360 * (percentage / 100))
     let height = null
     let innerHeight = null
@@ -82,21 +109,28 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
     // Set the numb title and position
     let numb_height = numb.clientHeight
     numb.innerText += ` ${percentage}%`
-    numb.style.width = `calc(50% - ${spacing}${unit})`
-    numb.style.marginTop = `${(bar_height / 2) - (numb_height / 2)}${unit}`
+    numb.style.width = `calc(50% - ${(barHeight / 2) + spacing}${unit})`
+    numb.style.marginTop = `${(barHeight / 2) - (numb_height / 2)}${unit}`
 
     // Set dot size and position
     dot.style.transform = `rotate(${-90 + move_position}deg)`;
-    dot.style.height = `${bar_height}${unit}`
-    dot.style.marginTop = `${-(bar_height / 2)}${unit}`
-    dotSpan.style.height = `${bar_height}${unit}`
-    dotSpan.style.width = `${bar_height}${unit}`
+    dot.style.height = `${barHeight}${unit}`
+    dot.style.marginTop = `${-(barHeight / 2)}${unit}`
+    dotSpan.style.height = `${barHeight}${unit}`
+    dotSpan.style.width = `${barHeight}${unit}`
 
     // Set the size and position of the startDot
-    startDot.style.height = `${bar_height}${unit}`
-    startDot.style.width = `calc(50% + ${bar_height / 2}${unit})`
-    startDotSpan.style.height = `${bar_height}${unit}`
-    startDotSpan.style.width = `${bar_height}${unit}`
+    startDot.style.height = `${barHeight}${unit}`
+    startDot.style.width = `calc(50% + ${barHeight / 2}${unit})`
+    startDotSpan.style.height = `${barHeight}${unit}`
+    startDotSpan.style.width = `${barHeight}${unit}`
+
+    if (border) {
+        dotSpan.style.border = `${borderSize}px solid ${borderColour}`
+        startDotSpan.style.border = `${borderSize}px solid ${borderColour}`
+        rightProgress.style.border = `${borderSize}px solid ${borderColour}`
+        leftProgress.style.border = `${borderSize}px solid ${borderColour}`
+    }
 
     // Fucnction is used to set the clipping styling for each progress bar
     function setBarsProgress(height) {
@@ -114,10 +148,17 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
     the current number of progress bars.*/
     if (masterhHeight) {
         let progressBarCount = master_parent.getElementsByClassName('circular').length;
+
+        height = progressBarCount == 1 ? masterhHeight[1] : masterhHeight[1] - ((barHeight * ((progressBarCount - 1) * 2)) + (spacing * ((progressBarCount - 1) * 2)))
         
-        height = progressBarCount == 1 ? masterhHeight[1] : masterhHeight[1] - ((bar_height * ((progressBarCount - 1) * 2)) + (spacing * ((progressBarCount - 1) * 2)))
+        let minimumSpacing = ((spacing * 2) + (barHeight * 2))
+        if (height <= minimumSpacing) {
+            master_parent.removeChild(progressBar);
+            throw new Error(`The progress bars exceed the height of ${masterhHeight[1]}${unit}. Unable to generate anymore progress bars. Minimum height for a progress bar is ${minimumSpacing + 1}px.`)
+        }
+        
         let halfHeight = height / 2
-        innerHeight = height - (bar_height * 2)
+        innerHeight = height - (barHeight * 2)
         margin = innerHeight / 2
         
         progressBar.style.zIndex = zIndex + progressBarCount
@@ -126,6 +167,22 @@ function progress(percentage, master_parent, title="No Title", colour="#000000")
         inner.style.height = `${innerHeight}${unit}`
         inner.style.width = `${innerHeight}${unit}`
         inner.style.margin = `-${margin}${unit} 0 0 -${margin}${unit}`
+
+        let diameter = innerHeight + (2 * borderSize)
+        let radius = diameter / 2
+        let angle = (move_position > 180) ? (360 - (move_position / 2)) : (move_position / 2)
+
+        if (border && innerBorder) {
+            innerBorder.style.height = `${diameter}${unit}`
+            innerBorder.style.width = `${diameter}${unit}`
+            innerBorder.style.margin = `-${margin + borderSize}${unit} 0 0 -${margin + borderSize}${unit}`
+            innerBorder.style.transform = `rotate(${move_position / 2}deg)`
+            innerBorder.style.border = `${borderSize}px solid ${borderColour}`
+
+            let subtractDistance = diameter - (radius - (radius * (Math.cos(angle * (Math.PI / 180)))))
+            innerBorder.style.clipPath = `inset(0px 0px ${(move_position > 180) ? subtractDistance : subtractDistance - borderSize}px 0px)`
+        }
+
         setBarsProgress(height)
     } else {
         throw new Error('No height set for master height');

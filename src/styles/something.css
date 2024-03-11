@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -13,13 +13,15 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-}
+} */
 
 .master {
+    /* font-family: P; */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding-top: 10px;
 }
 
 .circular {
@@ -57,7 +59,7 @@ body {
     position: absolute;
     text-align: right;
     z-index: 10;
-    font-size: 8px;
+    font-size: 80%;
     font-weight: 500;
 }
 
