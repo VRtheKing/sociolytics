@@ -18,6 +18,7 @@ const Stats = () => {
           console.error('Error fetching data:', result.message);
         }
       } catch (error) {
+        alert("Error fetching data");
         console.error('Error fetching data:', error);
       }
     };
