@@ -6,7 +6,7 @@ import './styles/header.css'
 function Header(){
     return(
         <div className="header">
-            <div className="logo1">
+            <div className="logo2">
             <img src={logo} alt="App Name"/>
             </div>
             <div className="nav1">

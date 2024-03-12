@@ -5,6 +5,13 @@ import stats from './images/Pressure.svg';
 import subscription from './images/Chat_plus.svg';
 import settings from './images/Setting_line.svg';
 import signout from './images/Sign_out_squre.svg';
+import statss from './images/stats.jpg';
+
+
+import "./styles/modal.css"
+import Subscription from "./Popus";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 
 function Sidebar() {
@@ -23,11 +30,14 @@ function Sidebar() {
         </div>
         <div className="group">
           <img src={stats} alt="Alt Text" />
-          <a href="/stats">Stats</a>
+          <Popup trigger={<p>Stats</p>} position="right center" modal>
+            <img src={statss} alt="" height={"590px"}/>
+          </Popup>
         </div>
         <div className="group">
           <img src={subscription} alt="Alt Text"/>
-          <a href="/subscription">Subscription</a>
+          <Popup trigger={<Subscription/>} position="right center" modal>
+          </Popup>
         </div>
         <div className="group">
           <img src={settings} alt="Alt Text" />
@@ -35,7 +45,7 @@ function Sidebar() {
         </div>
         <div className="group">
           <img src={signout} alt="Alt Text" />
-          <a href="/signout">Logout</a>
+          <a href="/home">Logout</a>
         </div>
       </div>
     </div>

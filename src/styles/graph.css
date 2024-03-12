@@ -1,5 +1,6 @@
     .graph-cont{
         padding-right: 20px;
+        width: 20%;
     }
 
     .name{
@@ -8,9 +9,12 @@
     }
 
     .graph-box{
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* padding-top: 10px;
+        padding-bottom: 10px; */
+        height: 40%;
         width: 100%;
         /* background-color: aqua; */
     }

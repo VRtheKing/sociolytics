@@ -9,6 +9,7 @@ import Stats from "./Stats";
 import Graph from "./Graph";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import AboutUs from "./AboutUs";
 
 import './styles/dashboard.css'
 import './styles/graph.css'
@@ -25,7 +26,7 @@ function App(){
           <Route index element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/aboutus" element={<Login />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Route>

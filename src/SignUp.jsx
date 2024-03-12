@@ -1,14 +1,22 @@
 import React from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { Icon } from "@iconify/react";
+import Header from './Header'
+
+import wave from './images/wave.svg'
 
 const SignUp = () => {
   return (
-    <div className="container">
-      <div className="form">
-        <SignupForm />
+    <div>
+        <Header/>
+        <div className="container">
+        <div className="form">
+          <SignupForm />
+        </div>
+        <img src={wave} alt="" className="wavee"/>
       </div>
     </div>
+    
   );
 };
 const SignupForm = () => {
@@ -21,7 +29,8 @@ const SignupForm = () => {
   };
 
   return (
-    <Form
+    <div>
+      <Form
       name="basic"
       style={{
         maxWidth: 600,
@@ -83,8 +92,7 @@ const SignupForm = () => {
         wrapperCol={{
           offset: 8,
           span: 16,
-        }}
-      >
+        }} className="btns">
         <Button type="primary" htmlType="submit">
           Create
         </Button>
@@ -98,6 +106,7 @@ const SignupForm = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
   );
 };
 

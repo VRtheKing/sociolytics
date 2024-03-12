@@ -47,10 +47,17 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 15px;
+    gap: 3px;
 }
 
 .group a {
+    font-size: 1.7vw;
+    text-decoration: none;
+    color: white;
+}
+
+.group p{
+    margin: 0px;
     font-size: 1.7vw;
     text-decoration: none;
     color: white;
